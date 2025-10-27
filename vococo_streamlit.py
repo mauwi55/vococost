@@ -352,7 +352,7 @@ def process_vocoder(mod_file, car_file, bands, n_fft, hop_percent,
             car_file.seek(0)
             car, sr_c = sf.read(car_file, always_2d=True, dtype='float32')
         
-        MAX_DURATION = 20
+        MAX_DURATION = 10
         max_samples_m = int(sr_m * MAX_DURATION)
         max_samples_c = int(sr_c * MAX_DURATION)
         
@@ -612,4 +612,5 @@ def main():
     #st.warning("⚠️ Max 20 seconds of audio | 最大20秒に制限中")
 
 if __name__ == "__main__":
+
     main()
