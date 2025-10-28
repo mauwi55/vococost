@@ -16,9 +16,9 @@ import io
 # Config
 st.set_page_config(
     page_title="Vococo",
-    page_icon="🎵",
+    page_icon="🍕",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # CSS
@@ -38,7 +38,8 @@ st.markdown("""
     }
     
     h1 {
-        font-family: 'Orbitron', sans-serif;
+        font-family: 'Orbitron', sans-serif !important;
+        letter-spacing:.1em;
         color: #ffffff;
     }
     
@@ -107,6 +108,21 @@ st.markdown("""
         background-color: rgb(127 141 70);
 	    mix-blend-mode: color-burn;
 	    color: white;
+	}
+	
+	section.stSidebar{
+	    background: radial-gradient(ellipse at right bottom, rgba(42, 72, 155, 0.68) 0%, rgb(85 131 104) 77%, rgb(237 126 83) 100%);
+        mix-blend-mode: hard-light;
+        box-shadow: #666666 0px 5px 5px 6px;
+	}
+	section.stSidebar a{
+		color:white;
+	}
+	@media all and (max-width: 767px) {
+		section.stSidebar{
+        mix-blend-mode:initial;
+        box-shadow:none;
+		}
 	}
     
 </style>
@@ -352,7 +368,7 @@ def process_vocoder(mod_file, car_file, bands, n_fft, hop_percent,
             car_file.seek(0)
             car, sr_c = sf.read(car_file, always_2d=True, dtype='float32')
         
-        MAX_DURATION = 10
+        MAX_DURATION = 20
         max_samples_m = int(sr_m * MAX_DURATION)
         max_samples_c = int(sr_c * MAX_DURATION)
         
@@ -461,7 +477,16 @@ def plot_window_shape(win_name, n_fft, kaiser_beta, tukey_alpha):
 
 # --------------------------- Main UI ------------------------------
 def main():
-    st.title("🎵 Vococo FFT Vocoder")
+    st.title("Vococo")
+    
+    st.sidebar.title("About")
+    st.sidebar.html("A classic vocoder audio effect.")
+    st.sidebar.html('''
+		<div style="text-align:right;">Marlene<br />
+		<a href="https://otasa.nekoweb.org/" target="_blank">Web</a>
+		<a href="https://bsky.app/profile/anguria.bsky.social" target="_blank">Bluesky</a>
+		</div>
+    ''')
     
     WINDOW_FUNCTIONS = {
         "Kaiser": "kaiser", "Hann": "hann", "Hamming": "hamming", 
@@ -612,5 +637,4 @@ def main():
     #st.warning("⚠️ Max 20 seconds of audio | 最大20秒に制限中")
 
 if __name__ == "__main__":
-
     main()
